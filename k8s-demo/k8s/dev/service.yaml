@@ -1,0 +1,13 @@
+# k8s-demo/k8s/dev/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-demo
+  namespace: dev
+spec:
+  selector:
+    app: k8s-demo
+  ports:
+    - port: 80
+      targetPort: 5000
+  type: NodePort
