@@ -41,9 +41,6 @@ jobs:
   build-push:
     needs: test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./k8s-demo
     permissions:
       contents: read
       packages: write
@@ -61,7 +58,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
-          context: .
+          context: ./k8s-demo/
           push: true
           tags: |
             ghcr.io/mcintoshd-ara/bcis309:latest
