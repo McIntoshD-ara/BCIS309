@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v55
+        with:
+          python-version: "3.12"
+        
+      - name: Run unit tests
+        run: pytest test_app.py -v
+
+      - name: Build Docker image
+        run: docker build -t k8s-demo:${{ github.sha }}
+
+      - name: Save image as artefact
+        run: docker save k8s-demo:${{ github.sha }} | gzip > image.tar.gz
+
+      - name: Upload artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image-${{ github.sha }}
+          path: image.tar.gz
