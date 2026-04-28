@@ -33,7 +33,7 @@ jobs:
         run: docker save k8s-demo:${{ github.sha }} | gzip > image.tar.gz
 
       - name: Upload artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docker-image-${{ github.sha }}
-          path: image.tar.gz
+          path: ./k8s-demo/image.tar.gz
