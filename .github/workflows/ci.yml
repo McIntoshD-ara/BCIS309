@@ -18,10 +18,10 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r k8s-demo/requirements.txt
 
       - name: Run unit tests
-        run: pytest test_app.py -v
+        run: pytest k8s-demo/test_app.py -v
 
       - name: Build Docker image
         run: docker build -t k8s-demo:${{ github.sha }} .
