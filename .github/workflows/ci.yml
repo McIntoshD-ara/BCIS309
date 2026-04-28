@@ -64,5 +64,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/bcis309:latest
-            ghcr.io/${{ github.repository_owner }}/bcis309:${{ github.sha }}
+            ghcr.io/mcintoshd-ara/bcis309:latest
+            ghcr.io/mcintoshd-ara/bcis309:${{ github.sha }}
