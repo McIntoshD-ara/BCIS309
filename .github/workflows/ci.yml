@@ -64,5 +64,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/k8s-demo:latest
-            ghcr.io/${{ github.repository_owner }}/k8s-demo:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/bcis309:latest
+            ghcr.io/${{ github.repository_owner }}/bcis309:${{ github.sha }}
