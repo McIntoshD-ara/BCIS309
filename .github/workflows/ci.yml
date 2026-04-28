@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./k8s-demo
     steps:
       - uses: actions/checkout@v6
 
@@ -18,10 +21,10 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -r /k8s-demo/requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run unit tests
-        run: pytest /k8s-demo/test_app.py -v
+        run: pytest test_app.py -v
 
       - name: Build Docker image
         run: docker build -t k8s-demo:${{ github.sha }} .
