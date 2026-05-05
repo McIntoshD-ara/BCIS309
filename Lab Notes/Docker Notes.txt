@@ -1,0 +1,31 @@
+What is Docker?
+	Docker is a platform for building, shipping, and running applications inside lightweight, isolated environments called containers
+	A container packages an application together with all of its dependencies, libraries, and configuration files, ensuring it runs consistently regardless of the host environment
+	Docker solves the classic "it works on my machine" problem by abstracting away differences between development, testing, and production environments
+	Docker containers are an abstraction of an OS environment, like a Virtual Machine is an abstraction of hardware.
+	
+Core Concepts
+	Image: A read-only template used to create containers, built from a set of layered instructions defined in a Dockerfile
+	Container: A running instance of an image; isolated from the host system but able to interact with it through defined ports and volumes
+	Dockerfile: A plain text file containing step-by-step instructions for assembling a Docker image
+	Registry: A storage and distribution system for Docker images; Docker Hub is the default public registry
+	Volume: A mechanism for persisting data outside the container lifecycle, used for databases and other stateful services
+	
+Why Use Docker?
+	Provides environment consistency across all stages of a software project
+	Reduces onboarding time; new developers can spin up a full working environment with a single command
+	Containers are significantly lighter than virtual machines because they share the host operating system kernel rather than running a full guest OS
+	Supports microservices architecture by allowing each service to run in its own isolated container
+	Integrates naturally into CI/CD pipelines, enabling automated testing and deployment workflows
+	
+Basic Workflow
+	Write a Dockerfile describing the application environment
+	Build an image from the Dockerfile using [docker build]
+	Run a container from that image using [docker run]
+	Push images to a registry so they can be pulled and deployed on any compatible host (Resources like Github Registry)
+	
+Common Use Cases in Industry
+	Local development environments that mirror production closely
+	Running isolated databases or third-party services without installing them directly on the host
+	Packaging applications for deployment to cloud platforms such as AWS, Azure, or Google Cloud
+	Enabling reproducible builds in automated testing pipelines
