@@ -1,3 +1,4 @@
 # requirements.txt
 flask
 pytest
+prometheus-flask-exporter

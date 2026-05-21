@@ -1,6 +1,8 @@
 from flask import Flask, jsonify
+from prometheus_flask_importer import PrometheusMetrics
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app) #automatically exposes /metrics endpoint
 
 @app.route("/")
 def index():
@@ -9,6 +11,10 @@ def index():
 @app.route("/health")
 def health():
     return jsonify({"healthy": True})
+
+@app.route("/add/<int:a>/<int:b>")
+def add(a, b):
+    return jsonify({"result": a + b})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
