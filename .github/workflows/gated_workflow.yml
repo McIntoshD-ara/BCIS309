@@ -63,16 +63,14 @@ jobs:
     runs-on: self-hosted
     needs: test-and-build
     environment: production
-    permissions:
-      contents: read
-      packages: write
     steps:
-      - name: Log in to GHCR
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v6
+
+      - name: Apply manifests
+        run: |
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/namespace.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/deployment.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/service.yaml
 
       - name: Deploy to prod
         run: |
