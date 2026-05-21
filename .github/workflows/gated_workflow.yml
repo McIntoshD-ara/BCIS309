@@ -49,9 +49,9 @@ jobs:
 
       - name: Apply manifests
         run: |
-          kubectl apply -f k8s-demo/k8s/dev/namespace.yaml
-          kubectl apply -f k8s-demo/k8s/dev/deployment.yaml
-          kubectl apply -f k8s-demo/k8s/dev/service.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/namespace.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/deployment.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/service.yaml
 
       - name: Update image to latest commit
         run: |
