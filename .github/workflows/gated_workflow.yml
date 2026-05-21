@@ -14,7 +14,6 @@ jobs:
     defaults:
       run:
         working-directory: ./k8s-demo
-
     steps:
       - uses: actions/checkout@v6
 
@@ -68,9 +67,9 @@ jobs:
 
       - name: Apply manifests
         run: |
-          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/namespace.yaml
-          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/deployment.yaml
-          kubectl apply -f ~/BCIS309/k8s-demo/k8s/dev/service.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/prod/namespace.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/prod/deployment.yaml
+          kubectl apply -f ~/BCIS309/k8s-demo/k8s/prod/service.yaml
 
       - name: Deploy to prod
         run: |
