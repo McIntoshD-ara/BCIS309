@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: default
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+
+      scrape_configs:
+        - job_name: "prometheus"
+          static_configs:
+          - targets: ["localhost:9090"]
+
+        - job_name: "k3s"
+          scheme: https
+          tls_config:
+            insecure_skip_verify: true
+          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+          static_configs:
+            - targets: ["kubernetes.default.svc:443"]
+          metrics_path: /api/v1/nodes/devops/proxy/metrics
+
+       - job_name: "kubelet"
+         scheme: https
+         tls_config:
+           insecure_skip_verify: true
+         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+         static_configs:
+           - targets: ["kubernetes.default.svc:443"]
+         metrics_path: /api/v1/nodes/devops/proxy/metrics/cadvisor
+
+       - job_name: "flask-app"
+         static_configs:
+           - targets: ["lab-app.dev.svc:80"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-monitoring
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab-monitoring
+  template:
+    metadata:
+      labels:
+        app: lab-monitoring
+    spec:
+      serviceAccountName: monitoring
+      containers:
+        - name: lab-monitoring
+          image: lab-monitoring:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+            - containerPort: 9090
+          env:
+            - name: GF_SECURITY_ADMIN_USER
+              value: "student"
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: "student"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lab-monitoring-service
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: lab-monitoring
+  ports:
+    - name: grafana
+      port: 3000
+      targetPort: 3000
+      nodePort: 30300
+    - name: prometheus
+      port: 9090
+      targetPort: 9090
+      nodePort: 30900
